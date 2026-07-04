@@ -1,0 +1,54 @@
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# ── Virtual Environments ────────────────────────────────────────────────────
+.venv/
+venv/
+ENV/
+
+# ── IDE / Editor ────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Testing & Coverage ─────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# ── mypy / type-checking ───────────────────────────────────────────────────
+.mypy_cache/
+
+# ── OS artifacts ────────────────────────────────────────────────────────────
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ── Docker ──────────────────────────────────────────────────────────────────
+*.log
+
+# ── Node / Next.js ──────────────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp.*
+.env*.local
+
+# ── CEDX Specific ──────────────────────────────────────────────────────────
+test_output.txt
+uvicorn_error.txt
+transcripts/

@@ -1,0 +1,17 @@
+From: supplier@vendor.example
+To: procurement@corp.example
+Subject: Invoice #INV-2026-0451 — Urgent approval needed
+Date: Mon, 16 Jun 2026 09:30:00 +0000
+Message-ID: <eml-test-001@vendor.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+
+Dear Procurement Team,
+
+Please find attached Invoice #INV-2026-0451 for consulting services
+rendered in Q2 2026.  Total amount: USD 34,500.00.
+
+Payment terms: Net 30 from invoice date.
+
+Best regards,
+Vendor Finance Dept.

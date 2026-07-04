@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cedx.internal/audit.schema.json",
+  "title": "CEDX Multi-Agent Governance Audit Schema",
+  "description": "Single source of truth for agent roles, model identifiers, trace spans, verifier verdicts, and record lifecycle states.",
+
+  "$defs": {
+    "agent_role": {
+      "type": "string",
+      "enum": ["orchestrator", "worker", "verifier", "router"],
+      "description": "Enumeration of agent roles within the fleet."
+    },
+
+    "model_id": {
+      "type": "string",
+      "enum": [
+        "gemini-1.5-flash",
+        "gpt-4o-mini",
+        "gemini-1.5-pro",
+        "gpt-4o",
+        "claude-sonnet-4"
+      ],
+      "description": "Authorized model identifiers for agent inference."
+    },
+
+    "verifier_verdict": {
+      "type": "string",
+      "enum": ["pass", "fail", "needs_human"],
+      "description": "Outcome of the verifier agent's evaluation."
+    },
+
+    "record_state": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "approved",
+        "rejected",
+        "exception",
+        "needs_human"
+      ],
+      "description": "Lifecycle state of a record within the agent pipeline."
+    },
+
+    "trace_span": {
+      "type": "object",
+      "description": "A single observability span emitted by an agent interaction.",
+      "required": [
+        "agent",
+        "model",
+        "prompt_version",
+        "tokens_in",
+        "tokens_out",
+        "cost_usd",
+        "latency_ms",
+        "retries",
+        "status"
+      ],
+      "properties": {
+        "agent":          { "type": "string", "description": "Name of the agent that produced this span." },
+        "model":          { "$ref": "#/$defs/model_id" },
+        "prompt_version": { "type": "string", "description": "Semantic version of the prompt template used." },
+        "tokens_in":      { "type": "integer", "minimum": 0 },
+        "tokens_out":     { "type": "integer", "minimum": 0 },
+        "cost_usd":       { "type": "number",  "minimum": 0.0 },
+        "latency_ms":     { "type": "number",  "minimum": 0.0 },
+        "retries":        { "type": "integer", "minimum": 0 },
+        "status":         { "type": "string", "description": "Outcome status (e.g., 'success', 'error', 'timeout')." },
+        "verdict":        {
+          "oneOf": [
+            { "$ref": "#/$defs/verifier_verdict" },
+            { "type": "null" }
+          ],
+          "description": "Only set by the verifier agent."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
