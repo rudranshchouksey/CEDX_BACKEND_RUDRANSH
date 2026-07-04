@@ -281,9 +281,9 @@ class OrchestratorAgent(AgentContract):
             )
 
         # ── All retries exhausted → needs_human ─────────────────────────
-        reason_codes.append("RETRIES_EXHAUSTED")
+        reason_codes.append("AGENT_LOOP")
         logger.warning(
-            "Orchestrator: record=%s all retries exhausted → needs_human.",
+            "Orchestrator: record=%s all retries exhausted (loop detected) → needs_human.",
             record.id,
         )
         return self._route_exception(

@@ -16,6 +16,7 @@ from cedx_pipeline.intake.registry import Record
 DELIVERY_BLOCK_CODES = frozenset({
     "AGENT_HALLUCINATION",
     "AGENT_MALFORMED",
+    "AGENT_LOOP",
     "CLASS_A_RISK",
 })
 

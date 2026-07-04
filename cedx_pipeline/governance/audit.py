@@ -117,6 +117,12 @@ class AuditEngine:
                 "threshold": self._amendment.threshold,
                 "digest": self._amendment.digest,
             },
+            "scale_projection_10k": {
+                "total_cost_usd": (collector.total_cost() / len(agent_trace) if agent_trace else 0.0) * 10000,
+                "total_time_minutes_concurrent_10": sum(
+                    sum(s["latency_ms"] for s in traces) for traces in agent_trace.values()
+                ) / len(agent_trace) / 60000 * 10000 / 10 if agent_trace else 0.0
+            },
             "output_package_hash": package_hash,
             "events": events_dump,
             "agent_trace": agent_trace,

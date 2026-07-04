@@ -151,7 +151,11 @@ async def get_status():
         "total_cost": state.stats.get("total_cost", 0.0),
         "avg_cost": state.stats.get("avg_cost", 0.0),
         "p95_latency": state.stats.get("p95_latency", 0.0),
-        "replay_llm": state.stats.get("replay_llm", True)
+        "replay_llm": state.stats.get("replay_llm", True),
+        "scale_projection_10k": {
+            "total_cost_usd": state.stats.get("avg_cost", 0.0) * 10000,
+            "total_time_minutes_concurrent_10": (state.stats.get("p95_latency", 0.0) * 10000 / 10) / 60000
+        }
     }
 
 @app.get("/api/records")

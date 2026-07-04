@@ -50,9 +50,12 @@ def _safe_decimal(value: Any) -> Decimal | None:
         return None
 
 
-def _generate_id(prefix: str) -> str:
-    """Generate a unique record ID with a format prefix."""
-    return f"{prefix}-{uuid.uuid4().hex[:12]}"
+def _generate_id(prefix: str, *args: Any) -> str:
+    """Generate a deterministic record ID with a format prefix based on the arguments."""
+    m = hashlib.sha256()
+    for arg in args:
+        m.update(str(arg).encode("utf-8"))
+    return f"{prefix}-{m.hexdigest()[:12]}"
 
 
 # ── Feed Parser ──────────────────────────────────────────────────────────────
@@ -102,7 +105,7 @@ def parse_feed(feed_path: Path) -> list[Record]:
 
         records.append(
             Record(
-                id=str(entry.get("id") or _generate_id("feed")),
+                id=str(entry.get("id") or _generate_id("feed", version_hash, idx)),
                 owner=entry.get("owner"),
                 deadline=entry.get("deadline"),
                 amount=_safe_decimal(entry.get("amount")),
@@ -163,7 +166,7 @@ def parse_eml_directory(inbox_path: Path) -> list[Record]:
 
             records.append(
                 Record(
-                    id=msg.get("Message-ID", _generate_id("eml")).strip("<>"),
+                    id=msg.get("Message-ID", _generate_id("eml", _sha256_hex(raw_bytes))).strip("<>"),
                     owner=msg.get("From"),
                     deadline=None,
                     amount=None,
@@ -234,7 +237,7 @@ def parse_pdf_directory(inbox_path: Path) -> list[Record]:
 
             records.append(
                 Record(
-                    id=_generate_id("pdf"),
+                    id=_generate_id("pdf", version_hash),
                     owner=None,
                     deadline=None,
                     amount=None,

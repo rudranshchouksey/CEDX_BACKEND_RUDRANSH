@@ -18,6 +18,8 @@ class AnomalyType(str, Enum):
     MISSING_INPUT = "MISSING_INPUT"
     OUTLIER = "OUTLIER"
     INJECTION_BLOCKED = "INJECTION_BLOCKED"
+    LOW_CONFIDENCE = "LOW_CONFIDENCE"
+    UNVERIFIED_ANOMALY = "UNVERIFIED_ANOMALY"
 
 
 @dataclass(frozen=True, slots=True)
